@@ -86,10 +86,12 @@ const renderDropdown = (index, tags) => {
 // ...
 
   
-
   return (
-    <div>
-      {/* <h1>C</h1> */}
+    <div className="container">
+      <h1>CSV Converter</h1>
+      <p>
+        Upload a CSV file and select tags from the dropdown to process the data.
+      </p>
       <input type="file" accept=".csv" onChange={handleFileUpload} />
 
       {csvData.length > 0 && (
@@ -104,36 +106,36 @@ const renderDropdown = (index, tags) => {
               </tr>
             </thead>
             <tbody>
-            {csvData.map((row, index) => (
-  <tr key={index}>
-    {Object.entries(row).map(([key, value], idx) => (
-      <td key={idx}>
-        {key === 'selected tags' ? (
-          selectedTags[index] && selectedTags[index].length > 0 ? (
-            <div className="selected-tags">
-              {selectedTags[index].map((tag, idx) => (
-                <span key={idx} className="selected-tag">
-                  {tag}
-                  <button onClick={() => handleRemoveTag(index, tag)}>&times;</button>
-                </span>
+              {csvData.map((row, index) => (
+                <tr key={index}>
+                  {Object.entries(row).map(([key, value], idx) => (
+                    <td key={idx}>
+                      {key === 'selected tags' ? (
+                        selectedTags[index] && selectedTags[index].length > 0 ? (
+                          <div className="selected-tags">
+                            {selectedTags[index].map((tag, idx) => (
+                              <span key={idx} className="selected-tag">
+                                {tag}
+                                <button onClick={() => handleRemoveTag(index, tag)}>&times;</button>
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          'No Tags Selected'
+                        )
+                      ) : key === 'select tags' ? (
+                        renderDropdown(index, value)
+                      ) : key === 'links' ? (
+                        <a href={value} target="_blank" rel="noopener noreferrer">
+                          {value}
+                        </a>
+                      ) : (
+                        value
+                      )}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </div>
-          ) : (
-            'No Tags Selected'
-          )
-        ) : key === 'select tags' ? (
-          renderDropdown(index, value)
-        ) : key === 'links' ? (
-          <a href={value} target="_blank" rel="noopener noreferrer">
-            {value}
-          </a>
-        ) : (
-          value
-        )}
-      </td>
-    ))}
-  </tr>
-))}
             </tbody>
           </table>
         </div>
